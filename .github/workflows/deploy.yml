@@ -67,17 +67,7 @@ jobs:
         if: ${{ steps.setup-packagemanager.outputs.manager == 'pnpm' }}
         uses: pnpm/action-setup@v2.3.0
 
-      - name: Set up bun
-        if: ${{ steps.setup-packagemanager.outputs.manager == 'bun' }}
-        run: |
-          curl -fsSL https://bun.sh/install | bash
-          export BUN_INSTALL="$HOME/.bun"
-          export PATH="$BUN_INSTALL/bin:$PATH"
-
-      - name: Add bun to path
-        if: ${{ steps.setup-packagemanager.outputs.manager == 'bun' }}
-        run: echo "BUN_INSTALL=$HOME/.bun" >> $GITHUB_ENV && echo "PATH=$BUN_INSTALL/bin:$PATH" >> $GITHUB_ENV
-        shell: bash
+      - uses: oven-sh/setup-bun@v2
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
