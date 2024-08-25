@@ -28,39 +28,51 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package-manager: [ "pnpm", "yarn", "bun", "npm" ]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Detect package manager
-        id: detect-package-manager
+      - name: Set up package manager
+        id: setup-packagemanager
         run: |
-          if [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
+          if [ "${{ matrix.package-manager }}" = "pnpm" ]; then
             echo "manager=pnpm" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=pnpm" >> $GITHUB_OUTPUT
-          elif [ -f "${{ github.workspace }}/yarn.lock" ]; then
+          elif [ "${{ matrix.package-manager }}" = "yarn" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
-          elif [ -f "${{ github.workspace }}/bun.lockb" ]; then
+          elif [ "${{ matrix.package-manager }}" = "bun" ]; then
             echo "manager=bun" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
             echo "runner=bun" >> $GITHUB_OUTPUT
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
+          elif [ "${{ matrix.package-manager }}" = "npm" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           else
             echo "Unable to determine package manager"
             exit 1
           fi
 
-      - name: Setup Node
+      - name: Set up Node.js
+        if: ${{ steps.setup-packagemanager.outputs.manager != 'bun' }}
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: ${{ steps.setup-packagemanager.outputs.manager }}
+
+      - name: Set up pnpm
+        if: ${{ steps.setup-packagemanager.outputs.manager == 'pnpm' }}
+        uses: pnpm/action-setup@v2.3.0
+
+      - name: Set up bun
+        if: ${{ steps.setup-packagemanager.outputs.manager == 'bun' }}
+        run: |
+          curl -fsSL https://bun.sh/install | bash
+          export BUN_INSTALL="$HOME/.bun"
+          export PATH="$BUN_INSTALL/bin:$PATH"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -77,10 +89,10 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/pnpm-lock.yaml', '**/bun.lockb') }}-
 
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: ${{ steps.setup-packagemanager.outputs.manager }} install
 
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: ${{ steps.setup-packagemanager.outputs.runner }} next build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
