@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu"
-import { useHotkeys } from '@mantine/hooks';
+import { useHotkeys, useLocalStorage } from '@mantine/hooks';
 import {
   Tooltip,
   TooltipContent,
@@ -27,10 +27,18 @@ export default function HomePage() {
     [" ", () => nextScale() ],
   ]);
 
-  const [difficulty, setDifficulty] = useState('easy');
+  const [difficulty, setDifficulty] = useLocalStorage<string>({
+    key: 'scale-difficulty',
+    defaultValue: 'easy',
+  });
+  const [hint, setHint] = useLocalStorage<boolean>({
+    key: 'scale-chords',
+    defaultValue: false,
+  });
+
   const [chord, setChord] = useState("none");
   const [scale, setScale] = useState(getRandomScale(difficulty));
-  const [hint, setHint] = useState<boolean>(false);
+
 
   function nextScale(){
     setScale(getRandomScale(difficulty))
@@ -99,11 +107,14 @@ export default function HomePage() {
       </div>
       <div>
         <div>
-          <h1 className={"pb-10 text-6xl font-bold leading-tight"}>
+          <h1 className={"pb-10 text-6xl font-bold flex flex-col justify-center item-center leading-tight"}>
+            <>
             {scale.note} {capitalizeFirstLetter(scale.scale.name)}
+            </>
+            <>
             {chord === "none" ? <></>:
-              <> with diatonic {chord}</>
-            }
+              <p> with diatonic {chord}</p>
+            }</>
           </h1>
         </div>
       </div>
