@@ -12,7 +12,7 @@ const nextConfig = {
    *
    * @see https://nextjs.org/docs/app/api-reference/next-config-js/basePath
    */
-  basePath: "/cliftonz/music-scale-quiz",
+  basePath: "/music-scale-quiz",
 
   /**
    * Disable server-based image optimization. Next.js does not support
