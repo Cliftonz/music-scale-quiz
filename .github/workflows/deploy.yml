@@ -36,16 +36,16 @@ jobs:
       - name: Set up package manager
         id: setup-packagemanager
         run: |
-          if [ "${{ matrix.package-manager }}" = "pnpm" ]; then
+          if [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
             echo "manager=pnpm" >> $GITHUB_OUTPUT
             echo "runner=pnpm" >> $GITHUB_OUTPUT
-          elif [ "${{ matrix.package-manager }}" = "yarn" ]; then
+          elif [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
-          elif [ "${{ matrix.package-manager }}" = "bun" ]; then
+          elif [ -f "${{ github.workspace }}/bun.lockb" ]; then
             echo "manager=bun" >> $GITHUB_OUTPUT
             echo "runner=bun" >> $GITHUB_OUTPUT
-          elif [ "${{ matrix.package-manager }}" = "npm" ]; then
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
             echo "manager=npm" >> $GITHUB_OUTPUT
             echo "runner=npx --no-install" >> $GITHUB_OUTPUT
           else
