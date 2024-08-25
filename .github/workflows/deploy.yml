@@ -71,6 +71,11 @@ jobs:
           export BUN_INSTALL="$HOME/.bun"
           export PATH="$BUN_INSTALL/bin:$PATH"
 
+      - name: Add bun to path
+        if: ${{ steps.setup-packagemanager.outputs.manager == 'bun' }}
+        run: echo "BUN_INSTALL=$HOME/.bun" >> $GITHUB_ENV && echo "PATH=$BUN_INSTALL/bin:$PATH" >> $GITHUB_ENV
+        shell: bash
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
