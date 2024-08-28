@@ -155,5 +155,9 @@ export const hard: Scale[] = [
   {
     name: "Prometheus",
     steps: ["W", "W", "W", "h", "W+h", "h"]
-  }
+  },
+  {
+    name: "Augmented",
+    steps: ["W+h", "h", "W+h", "h", "W+h", "h"]
+  },
 ];
