@@ -130,6 +130,30 @@ export const medium: Scale[] = [
   {
     name: "bebop",
     steps: ["W", "W+h", "h", "h", "W", "h", "W", "W"]
+  },
+  {
+    name: "dorian flat 2 (MM-mode2)", // Newly added
+    steps: ["h", "W", "W", "W", "W", "h", "W"]
+  },
+  {
+    name: "lydian augmented", // Newly added
+    steps: ["W", "W", "W", "h", "W", "W", "h"]
+  },
+  {
+    name: "lydian dominant", // Newly added
+    steps: ["W", "W", "W", "h", "W", "h", "W"]
+  },
+  {
+    name: "mixolydian flat 6", // Newly added
+    steps: ["W", "W", "h", "W", "h", "W", "W"]
+  },
+  {
+    name: "aeolian flat 5", // Newly added
+    steps: ["W", "h", "W", "W", "h", "W", "W"]
+  },
+  {
+    name: "super locrian", // Newly added
+    steps: ["h", "W", "h", "W", "W", "W", "W"]
   }
 ];
 
