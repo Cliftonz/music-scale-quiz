@@ -187,5 +187,9 @@ export const hard: Scale[] = [
   {
     name: "Byzantine",
     steps: ["h", "WW", "h", "W", "h", "WW", "h"]
+  },
+  {
+    name: "Ukrainian Dorian",
+    steps: ["W", "h", "W+h", "h", "W", "h", "W"]
   }
 ];
