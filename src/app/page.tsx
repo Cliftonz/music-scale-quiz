@@ -51,8 +51,8 @@ export default function HomePage() {
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <h1 className={"pb-4 text-6xl font-bold leading-tight"}>Scale Quiz</h1>
+    <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+      <h1 className={"pb-4 text-2xl md:text-6xl font-bold leading-tight"}>Scale Quiz</h1>
       <div className={"flex flex-row space-x-4 pb-16 pt-8"}>
         <div>
           <DropdownMenu>
@@ -107,7 +107,7 @@ export default function HomePage() {
       </div>
       <div>
         <div>
-          <h1 className={"pb-10 text-6xl font-bold flex flex-col justify-center item-center leading-tight"}>
+          <h1 className={"pb-10 text-2xl md:text-6xl font-bold flex flex-col justify-center item-center leading-tight"}>
             <>
             {scale.note} {capitalizeFirstLetter(scale.scale.name)}
             </>
@@ -140,8 +140,8 @@ export default function HomePage() {
       {
         hint ?
           <>
-          <p className={"text-2xl text-bold"}>Hint 1</p>
-            <p className={"text-4xl"}>
+          <p className={"pb-8 text-2xl text-bold"}>Hint 1</p>
+            <p className={"pb-16 md:pb-0 text-4xl"}>
               {scale.scale.steps.toString()}
             </p>
           </> : <></>
