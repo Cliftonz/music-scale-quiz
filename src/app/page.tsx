@@ -67,7 +67,7 @@ export default function HomePage() {
         <div className={"flex flex-row space-x-4 pb-16 pt-8"}>
           <div>
             <DropdownMenu>
-              <DropdownMenuTrigger>
+              <DropdownMenuTrigger asChild={true}>
                 <Button className={"text-black"} variant="outline">
                   {difficulty}
                 </Button>
